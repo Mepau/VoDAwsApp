@@ -1,23 +1,23 @@
 /* src/App.js */
-import React, { useEffect, useState } from 'react'
-import { API, graphqlOperation } from 'aws-amplify'
-import { createVideo } from '../graphql/mutations'
-import { listVideos } from '../graphql/queries'
-
-
-const initialState = { name: '', description: '' }
+import React, { useEffect, useState } from 'react';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listVideos } from '../graphql/queries';
+import { Container, Carousel } from 'react-bootstrap';
 
 const AppContainer = () => {
-  const [formState, setFormState] = useState(initialState)
+
   const [videos, setVideos] = useState([])
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     fetchVideos()
   }, [])
 
-  function setInput(key, value) {
-    setFormState({ ...formState, [key]: value })
-  }
+  
+
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
 
   async function fetchVideos() {
     try {
@@ -27,40 +27,27 @@ const AppContainer = () => {
     } catch (err) { console.log('error fetching videos') }
   }
 
-  async function addVideo() {
-    try {
-      if (!formState.name || !formState.description) return
-      const video = { ...formState }
-      setVideos([...videos, video])
-      setFormState(initialState)
-      await API.graphql(graphqlOperation(createVideo, {input: video}))
-    } catch (err) {
-      console.log('error creating video:', err)
-    }
-  }
 
   return (
-    <div style={styles.container}>
+    <div >
+      <Container fluid>
+        
       <h2>Amplify Videos</h2>
       {
         videos.map((video, index) => (
-          <div key={video.id ? video.id : index} style={styles.video}>
-            <p style={styles.videoName}>{video.name}</p>
-            <p style={styles.videoDescription}>{video.description}</p>
+          <div key={video.guid ? video.id : index}>
+            {JSON.stringify(video)}
           </div>
         ))
       }
+      </Container>
     </div>
+
+
+
   )
 }
 
-const styles = {
-  container: { width: 400, margin: '0 auto', display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', padding: 20 },
-  video: {  marginBottom: 15 },
-  input: { border: 'none', backgroundColor: '#ddd', marginBottom: 10, padding: 8, fontSize: 18 },
-  videoName: { fontSize: 20, fontWeight: 'bold' },
-  videoDescription: { marginBottom: 0 },
-  button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' }
-}
+
 
 export default AppContainer;
