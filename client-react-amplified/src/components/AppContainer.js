@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoCarousel from './VideoCarousel';
+import UploadForm from './UploadForm';
 
 
 const AppContainer = () => {
@@ -22,7 +23,10 @@ const AppContainer = () => {
   }
 
   return (
-    <VideoCarousel videos={videos}/>
+    <div>
+      <VideoCarousel videos={videos}/>
+      <UploadForm/>
+    </div>
   );
   
 }
