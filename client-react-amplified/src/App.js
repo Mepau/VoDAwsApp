@@ -4,8 +4,10 @@ import Amplify from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsExports from "./aws-exports";
 import AppContainter from './components/AppContainer';
-require('dotenv').config();
+var AWS = require('aws-sdk');
+AWS.config.update({region:'us-east-1'});
 Amplify.configure(awsExports);
+
 
 
 
