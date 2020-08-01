@@ -1,34 +1,34 @@
 /* src/App.js */
 import React, { useState } from 'react';
-import { Grid, Container } from '@material-ui/core';
-import ReactPlayer from 'react-player';
+import { Grid } from '@material-ui/core';
+
+import VideoCard from "./VideoCard";
 
 const VideoGrid = (props) => {
-
-  const [index, setIndex] = useState(0);
-
-
-
+ 
   return (
-    <Grid container
+    <div>
+      { (props.videos)?
+      <Grid container 
           direction="row"
           justify="center"
-          alignItems="center">
-      {
-        props.videos.map((video, index) => {
-          if(video){
-          return <Container maxWidth="sm">
-            <ReactPlayer 
-              url={video.hlsUrl}
-              playing = {false}
-              controls = {true}  
-                        />
-          </Container>
-          }
-          }
-        )
-      }
-    </Grid>
+          alignItems="center"
+          fixed 
+          >
+        {
+          
+          props.videos.map((video, index) => (
+            <div>
+              <Grid item>
+                <VideoCard video={video}/>
+              </Grid>
+            </div>
+
+          ))
+        }
+      </Grid>
+      : "No hay videos para mostrar"}
+    </div>
   );
   
 }
