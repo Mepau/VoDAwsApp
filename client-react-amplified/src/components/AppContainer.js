@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
-import VideoCarousel from './VideoCarousel';
+import VideoGrid from './VideoGrid';
 import UploadForm from './UploadForm';
 
 async function signOut() {
@@ -16,25 +16,26 @@ async function signOut() {
 
 const AppContainer = () => {
 
-  const [videos, setVideos] = useState([])
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     fetchVideos()
   }, [])
 
   async function fetchVideos() {
-    try {
+    
+      
       const videoData = await API.graphql(graphqlOperation(listVideos))
-      console.log(videoData);
-      const videos = videoData.data.listVideos.items
-      setVideos(videos)
-    } catch (err) { console.log(err) }
+                              .catch(err => {if(err.data) setVideos(err.data.listVideos.items);})
+      const videos = (videoData)?videoData.data.listVideos.items:[];
+      if(videos)setVideos(videos);
+    
   }
 
   return (
     <div>
       <button onClick= {() => signOut()}/>
-      <VideoCarousel videos={videos}/>
+      <VideoGrid videos={videos}/>
       <UploadForm/>
     </div>
   );

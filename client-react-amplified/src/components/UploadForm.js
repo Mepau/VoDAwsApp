@@ -1,6 +1,6 @@
 //  UserSubform/index.js
 import React, { Component } from 'react';
-import { Container, Button } from "react-bootstrap";
+import { Container, Button } from "@material-ui/core";
 import { Formik, Field, Form} from 'formik';
 import Auth from '@aws-amplify/auth';
 import Lambda from 'aws-sdk/clients/lambda'; // npm install aws-sdk
@@ -98,7 +98,7 @@ export default class UploadForm extends Component {
         }
         return (
 
-            <Container fluid>
+            <Container>
               <Formik initialValues= {savedValues || initialValues }
                         enableReinitialize
                         onSubmit= {(data, {setSubmitting, resetForm}) => {
@@ -116,7 +116,7 @@ export default class UploadForm extends Component {
                       <Field name="videoName" type="input"/>
                       <div>   
                       <Field disabled name="signedUrl" type="text" label="S3 sign"/>
-                      <Button variant="success" size="md" onClick= {(e) => { this.handleSignReq(e, values)}}>
+                      <Button  onClick= {(e) => { this.handleSignReq(e, values)}}>
                           Click
                       </Button>
                       </div>
