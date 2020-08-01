@@ -4,7 +4,7 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoGrid from './VideoGrid';
 import UploadForm from './UploadForm';
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Container, Box } from "@material-ui/core";
 
 async function signOut() {
   try {
@@ -13,7 +13,6 @@ async function signOut() {
       console.log('error signing out: ', error);
   }
 }
-
 
 const AppContainer = () => {
 
@@ -24,30 +23,41 @@ const AppContainer = () => {
   }, [])
 
   async function fetchVideos() {
-    
       
+    //GraphQL reports both fetches data anad error if any for each element
       try
       {
+        //If there are no errors set whole data
         const videodata = await API.graphql(graphqlOperation(listVideos)) 
         const videos = videodata.data.listVideos.items;
         setVideos(videos);
       } catch (e) {
+        //if error set gathered data
         const videos = e.data.listVideos.items;
         setVideos(videos);
       }
-    
   }
 
   return (
-    <div>
+    <Box >
       
-      <Button onClick= {() => signOut()}/>
-      
-        <VideoGrid videos={videos}/>
-      
-        <UploadForm/>
-     
-    </div>
+      <Button variant="contained" color="secondary" onClick= {() => signOut()}>
+        Sign Out
+      </Button>
+      <Container display="flex">
+        <Grid container 
+              justify="center"
+              alignItems="center"
+              direction="column">
+          <Grid item >
+            <VideoGrid videos={videos}/>
+          </Grid>
+          <Grid item>
+            <UploadForm/>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
   
 }
