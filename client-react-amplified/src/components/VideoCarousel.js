@@ -18,7 +18,7 @@ const VideoCarousel = (props) => {
           <Carousel.Item key={video.guid}>
             <ReactPlayer 
               url={video.hlsUrl}
-              playing = {true}
+              playing = {false}
               controls = {true}  
                         />
           <Carousel.Caption>
