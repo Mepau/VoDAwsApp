@@ -4,6 +4,7 @@ import { Container, Button } from "react-bootstrap";
 import { Formik, Field, Form} from 'formik';
 import Auth from '@aws-amplify/auth';
 import Lambda from 'aws-sdk/clients/lambda'; // npm install aws-sdk
+import axios from "axios";
 
 
 export default class UploadForm extends Component {
@@ -42,20 +43,21 @@ export default class UploadForm extends Component {
 
                 
                 var payloadata = JSON.parse(data.Payload);
-                var body = JSON.parse(payloadata.body);
-                console.log(body);
+                if(payloadata) var body = JSON.parse(payloadata.body);
+                console.log(body.uploadURL);
                 this.setState({
-                                signedUrl: body.uploadURL,
-                                videoName: body.videoFilename,
-                                urlAssigned: true
+                                signedUrl: (body)?body.uploadURL: null,
+                                videoName: (body)?body.videoFilename:null
                                  })            
         });
     })}
 
     //Handler for video file upload
     handleFileChange = (e) => {
-        this.setState({[e.target.id]: e.currentTarget.files[0]});
+        this.setState({file: e.currentTarget.files[0]});
     }
+
+
     
     //Test file data output
     fileData = () => { 
@@ -79,6 +81,8 @@ export default class UploadForm extends Component {
         } 
       }; 
 
+      
+
     render() {
         
         //Formik initial vlaues
@@ -98,8 +102,13 @@ export default class UploadForm extends Component {
               <Formik initialValues= {savedValues || initialValues }
                         enableReinitialize
                         onSubmit= {(data, {setSubmitting, resetForm}) => {
-                        console.log(data);
-                        setSubmitting(false)        
+                        console.log(data.file);
+                        var options = { headers: { 'Content-Type': "video/mp4"} };
+                        axios.put(data.signedUrl,this.state.file,options)
+                                .then(res => {
+                                console.log(res)})
+                            .catch(err => console.log(err));
+                        
                     }}
                 >
                   {({values, isSubmitting}) => (
