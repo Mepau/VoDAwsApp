@@ -10,7 +10,6 @@ Amplify.configure(awsExports);
 
 
 
-
 const App = () => {
 
   return (

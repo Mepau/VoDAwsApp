@@ -22,12 +22,11 @@ export default class UploadForm extends Component {
     //Handler for obtaining pre signed S3 URL for uploads
     handleSignReq = (e, values) => {
 
-        //Check for values inserted in form
-        if(values.videoName) console.log("Si");
         
         //Obtain auth credentials from aws sdk env
         Auth.currentCredentials()
         .then(credentials => {
+            console.log(credentials);
             const lambda = new Lambda({
             credentials: Auth.essentialCredentials(credentials)
         });
@@ -38,7 +37,7 @@ export default class UploadForm extends Component {
             FunctionName: '746016492294:function:uploadimageS3',
             Payload: JSON.stringify(values)
         }, (err, data) => {
-            if (err) console.log(err, err.stack); // an error occurred
+            if (err) console.log(JSON.stringify(err)); // an error occurred
             else      // successful response
 
                 
@@ -77,14 +76,12 @@ export default class UploadForm extends Component {
               <Formik initialValues= {savedValues || initialValues }
                         enableReinitialize
                         onSubmit= {(data, {setSubmitting, resetForm}) => {
-                        console.log(data.file);
-
                         
                         var options = { headers: { 'Content-Type': "video/mp4"} };
                         axios.put(data.signedUrl,this.state.file,options)
                                 .then(res => {
-                                console.log(res)})
-                            .catch(err => console.log(err));
+                                console.log({res})})
+                            .catch(err => console.log({error: err}));
                         
                         
                     }}
