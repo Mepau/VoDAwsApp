@@ -11,6 +11,8 @@ const useStyles = makeStyles({
 const VideoCard = (props) => {
 
     const classes = useStyles();
+
+    console.log(props.video);
     return(
         <Box display="flex">
             {
