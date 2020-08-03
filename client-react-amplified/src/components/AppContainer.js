@@ -39,8 +39,7 @@ const AppContainer = () => {
   }
 
   return (
-    <Box >
-      
+    <Box >     
       <Button variant="contained" color="secondary" onClick= {() => signOut()}>
         Sign Out
       </Button>
@@ -50,8 +49,7 @@ const AppContainer = () => {
               alignItems="center"
               direction="column">
           <Grid item >
-            <VideoGrid videos={videos}/>
-            
+            <VideoGrid videos={videos}/>   
           </Grid>
           <Grid item>
             <UploadForm/>

@@ -6,7 +6,9 @@ import { Dialog,
         Button, 
         makeStyles, 
         AppBar,
-        Toolbar, Box   } from "@material-ui/core";
+        Toolbar, 
+        Box,
+        Link   } from "@material-ui/core";
 import ReactPlayer from 'react-player';
 import Slide from '@material-ui/core/Slide';
 
@@ -40,39 +42,46 @@ const VideoModal = (props) => {
     };
 
     return(
-                <Box>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Open Video
+        <Box>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+            Open Video
+        </Button>
+        <Dialog  onClose={handleClose} 
+                aria-labelledby="customized-dialog-title" 
+                open={open}>
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <Button autoFocus color="inherit" onClick={handleClose}>
+                  close
                 </Button>
-                <Dialog  onClose={handleClose} 
-                        aria-labelledby="customized-dialog-title" 
-                        open={open}>
-                    <AppBar className={classes.appBar}>
-                      <Toolbar>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
-                          close
-                        </Button>
-                      </Toolbar>
-                    </AppBar>
-                    <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        {srcVideo}
-                    </DialogTitle>
-                    <DialogContent dividers>
-                        <Box display="flex">
-                            <ReactPlayer 
-                                url={props.video.hlsUrl}
-                                playing = {false}
-                                controls = {true}  
-                            />
-                        </Box>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleClose} color="primary">
-                        Close
-                      </Button>
-                    </DialogActions>
-                </Dialog>
+              </Toolbar>
+            </AppBar>
+            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                {srcVideo}
+            </DialogTitle>
+            <DialogContent dividers>
+                <Box display="flex">
+                    <ReactPlayer 
+                        url={props.video.hlsUrl}
+                        playing = {false}
+                        controls = {true}  
+                    />
                 </Box>
+                <Link href={mp4Urls[0]} color="inherit" rel="noreferrer" variant="body2">
+                  Mp4 Link
+                </Link>
+                {""}
+                <Link href={dashUrl} color="inherit" rel="noreferrer" variant="body2">
+                  Dash Link
+                </Link>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+        </Dialog>
+        </Box>
     )
 
 }

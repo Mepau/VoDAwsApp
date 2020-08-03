@@ -47,25 +47,23 @@ const VideoCard = (props) => {
     console.log(props.video);
     return(
         <Box display="flex">
-            {
-                props.video ? (
-                    <Card className={classes.root}>
-                        <CardHeader title={videoName[0] + " video"}/>                     
-                        <CardMedia className={classes.media}
-                                    image={(frameCapture)?thumbNailsUrls[0]:null}/>
-                        <CardContent>
-                            <VideoModal video={props.video}/>
-                            <Button variant="contained" color="secondary" onClick= {(e) => { handleDeleteClick(e)}}>
-                              Eliminar
-                            </Button>
-                        </CardContent>
-                        
-                    </Card>
-                ): null
-            }
+          {
+            props.video ? (
+              <Card className={classes.root}>
+                <CardHeader title={videoName[0] + " video"}/>                     
+                <CardMedia className={classes.media}
+                            image={(frameCapture)?thumbNailsUrls[0]:null}/>
+                <CardContent>
+                    <VideoModal video={props.video}/>
+                    <Button variant="contained" color="secondary" onClick= {(e) => { handleDeleteClick(e)}}>
+                      Eliminar
+                    </Button>
+                </CardContent>
+              </Card>
+            ): null
+          }
         </Box>
     )
-
 }
 
 export default VideoCard;

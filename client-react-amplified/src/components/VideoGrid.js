@@ -17,7 +17,6 @@ const VideoGrid = (props) => {
           >
         {
           props.videos.map((video, index) => (
-
             (video.hlsUrl !== null)?
             <Grid item>
               <VideoCard video={video}/>
