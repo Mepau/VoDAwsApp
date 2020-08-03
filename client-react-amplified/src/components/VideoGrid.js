@@ -1,7 +1,6 @@
 /* src/App.js */
 import React, { useState } from 'react';
 import { Grid, Box } from '@material-ui/core';
-
 import VideoCard from "./VideoCard";
 
 

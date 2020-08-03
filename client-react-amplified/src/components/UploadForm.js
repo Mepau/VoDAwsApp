@@ -39,8 +39,6 @@ export default class UploadForm extends Component {
         }, (err, data) => {
             if (err) console.log(JSON.stringify(err)); // an error occurred
             else      // successful response
-
-                
                 var payloadata = JSON.parse(data.Payload);
                 if(payloadata) var body = JSON.parse(payloadata.body);
                 
@@ -55,10 +53,8 @@ export default class UploadForm extends Component {
     handleFileChange = (e) => {
         this.setState({file: e.currentTarget.files[0]});
     }
- 
 
-    render() {
-        
+    render() {     
         //Formik initial vlaues
         const initialValues = { videoName:"",
             signedUrl:"",

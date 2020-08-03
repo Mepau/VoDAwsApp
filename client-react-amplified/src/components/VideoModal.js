@@ -27,8 +27,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const VideoModal = (props) => {
 
     const classes = useStyles();
-
     const [open, setOpen] = React.useState(false);
+
+    const { srcVideo, thumbNailsUrls, mp4Urls, frameCapture, dashUrl } = props.video;
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,12 +40,13 @@ const VideoModal = (props) => {
     };
 
     return(
- 
                 <Box>
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Open dialog
+                    Open Video
                 </Button>
-                <Dialog  onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                <Dialog  onClose={handleClose} 
+                        aria-labelledby="customized-dialog-title" 
+                        open={open}>
                     <AppBar className={classes.appBar}>
                       <Toolbar>
                         <Button autoFocus color="inherit" onClick={handleClose}>
@@ -52,7 +55,7 @@ const VideoModal = (props) => {
                       </Toolbar>
                     </AppBar>
                     <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        Modal title
+                        {srcVideo}
                     </DialogTitle>
                     <DialogContent dividers>
                         <Box display="flex">
