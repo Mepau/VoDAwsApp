@@ -46,7 +46,7 @@ const VideoCard = (props) => {
 
     console.log(props.video);
     return(
-        <Box display="flex">
+        <Box display="flex"  boxShadow={3}>
           {
             props.video ? (
               <Card className={classes.root}>

@@ -68,7 +68,8 @@ export default class UploadForm extends Component {
         }
         return (
 
-            <Box display="flex">
+            <Box display="flex" flexDirection="column" boxShadow={3} width="auto%">
+                <h2>Upload Form: </h2>
               <Formik initialValues= {savedValues || initialValues }
                         enableReinitialize
                         onSubmit= {(data, {setSubmitting, resetForm}) => {

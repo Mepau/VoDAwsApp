@@ -60,20 +60,23 @@ const VideoModal = (props) => {
                 {srcVideo}
             </DialogTitle>
             <DialogContent dividers>
-                <Box display="flex">
+                <Box display="flex" justifyContent="center">
                     <ReactPlayer 
                         url={props.video.hlsUrl}
                         playing = {false}
                         controls = {true}  
                     />
                 </Box>
-                <Link href={mp4Urls[0]} color="inherit" rel="noreferrer" variant="body2">
-                  Mp4 Link
-                </Link>
-                {""}
-                <Link href={dashUrl} color="inherit" rel="noreferrer" variant="body2">
-                  Dash Link
-                </Link>
+                <div>
+                  <Link href={mp4Urls[0]} color="inherit" rel="noreferrer" variant="body2">
+                    Mp4 Link
+                  </Link>
+                </div>
+                <div>
+                  <Link href={dashUrl} color="inherit" rel="noreferrer" variant="body2">
+                    Dash Link
+                  </Link>
+                </div>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">

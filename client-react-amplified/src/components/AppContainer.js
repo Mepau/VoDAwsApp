@@ -39,24 +39,30 @@ const AppContainer = () => {
   }
 
   return (
-    <Box >     
-      <Button variant="contained" color="secondary" onClick= {() => signOut()}>
-        Sign Out
-      </Button>
+    <div>
+      <Box >     
+        <Button variant="contained" color="secondary" onClick= {() => signOut()}>
+          Sign Out
+        </Button>
+      </Box>
       <Container display="flex">
         <Grid container 
               justify="center"
               alignItems="center"
-              direction="column">
+              direction="row"
+              spacing={2}
+              maxWidth="md">
           <Grid item >
             <VideoGrid videos={videos}/>   
           </Grid>
           <Grid item>
-            <UploadForm/>
+            <Box>
+              <UploadForm/>
+            </Box> 
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </div>
   );
   
 }
