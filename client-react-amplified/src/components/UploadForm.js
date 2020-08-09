@@ -5,7 +5,7 @@ import { Formik, Field, Form } from 'formik';
 import Auth from '@aws-amplify/auth';
 import Lambda from 'aws-sdk/clients/lambda'; // npm install aws-sdk
 import axios from "axios";
-
+import './uploadFormStyle.css';
 
 export default class UploadForm extends Component {
 
@@ -67,8 +67,8 @@ export default class UploadForm extends Component {
             file: this.state.file
         }
         return (
-
-            <Box display="flex" flexDirection="column" boxShadow={3} width="auto%">
+            <div className="uploadFormDiv container">
+              <Box display="flex" flexDirection="column" boxShadow={3} width="auto%">
                 <h2>Upload Form: </h2>
               <Formik initialValues= {savedValues || initialValues }
                         enableReinitialize
@@ -100,6 +100,8 @@ export default class UploadForm extends Component {
                   )}
               </Formik>
             </Box>
+            </div>
+          
           )
     }
 }

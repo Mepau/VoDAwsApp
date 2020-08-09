@@ -8,16 +8,24 @@ import { Grid, Button, Container, Box } from "@material-ui/core";
 import  'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import './appContainerStyles.css';
-async function signOut() {
-  try {
-      await Auth.signOut();
-  } catch (error) {
-      console.log('error signing out: ', error);
-  }
-}
+import { withRouter } from 'react-router-dom';
 
-const AppContainer = () => {
 
+
+// async function signOut() {
+//   try {
+//     console.log("sign out!");
+//       await Auth.signOut();
+     
+//   } catch (error) {
+//       console.log('error signing out: ', error);
+//   }
+// }
+
+const AppContainer = (props) => {
+
+
+  const {history} = props;
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
@@ -25,11 +33,10 @@ const AppContainer = () => {
   }, [])
 
   const styles= {
-    marginTop: '50px'
-  }
-  const leftMenu = {
+    marginTop: '70px'
     
   }
+
 
   async function fetchVideos() {
       
@@ -37,12 +44,12 @@ const AppContainer = () => {
       try
       {
         // If there are no errors set whole data
-        // const videodata = await API.graphql(graphqlOperation(listVideos)) 
-        // const videos = videodata.data.listVideos.items;
-        const videos = 
-        [
+        const videodata = await API.graphql(graphqlOperation(listVideos)) 
+        const videos = videodata.data.listVideos.items;
+        // const videos = 
+        // [
           
-        ]
+        // ]
         setVideos(videos);
       } catch (e) {
         //if error set gathered data
@@ -53,55 +60,48 @@ const AppContainer = () => {
 
   return (
     <div>
-      <div className= "container">
-        <Navbar className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-          <a class="navbar-brand" >AwsVideos</a>
-          <Button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </Button>
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <a className="nav-link" >Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item" >
-              <a className="nav-link" >Sign Out</a>
-            </li>
-          
-          </ul>
-         </div>
-        </Navbar>  
-      </div>
-    <div style ={styles}>
-          <Box >     
-                <Button variant="contained" color="secondary" onClick= {() => signOut()}>
-                  Sign Out
-                </Button>
-              </Box>
-              <Container display="flex">
-                <Grid container 
-                      justify="center"
-                      alignItems="center"
-                      direction="row"
-                      spacing={2}
-                      maxWidth="md">
-                  <Grid item >
-                    <VideoGrid videos={videos}/>   
-                  </Grid>
-                  <Grid item>
-                    <Box>
-                      <UploadForm/>
-                    </Box> 
-                  </Grid>
+     <div style ={styles}>    
+            <div   className="mainmenu container">
+                {/* <div className="leftmenu">
+                    <input id="search"  placeholder="Search"  type="text"/>
+                    <Button id="buttonSearch">Search</Button>
+                </div> */}
+                <div className="rightmenu">            
+                    <Button id="uploadButton" color="secondary" className="btn btn-primary btn-md" 
+                    onClick={()=>{ history.push('/uploadForm')}}>Upload Video</Button>        
+                </div>
+              
+            </div>
+            {/* <Box >     
+             <Button variant="contained" color="secondary">
+                Sign Out
+              </Button> 
+            </Box> */}
+            <Container display="flex">
+              <Grid container 
+                    justify="center"
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                   >
+                <Grid item >
+                  <VideoGrid videos={videos}/>   
                 </Grid>
-              </Container>
-          </div>
-            
-    </div>
+                <Grid item>
+                  <Box>
+                    {/* <UploadForm/> */}
+                  </Box> 
+                </Grid>
+              </Grid>
+            </Container>
+        </div>
+          
+  </div>
+   
   );
   
 }
 
 
 
-export default AppContainer;
+export default withRouter(AppContainer);
