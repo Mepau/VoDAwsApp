@@ -17,8 +17,7 @@ const NavContainer = (props)=>{
        
         console.log("sign out!");
           await Auth.signOut();
-          history.goBack();
-       
+                 
         
       } catch (error) {
           console.log('error signing out: ', error);
