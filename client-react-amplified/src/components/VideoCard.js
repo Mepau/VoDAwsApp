@@ -44,7 +44,6 @@ const VideoCard = (props) => {
         });
     })}
 
-    console.log(props.video);
     return(
         <Box display="flex"  boxShadow={3}>
           {

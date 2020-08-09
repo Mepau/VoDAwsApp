@@ -35,8 +35,8 @@ const AppContainer = () => {
 
         console.log(e);
         //if error set gathered data
-        //const videos = e.data.listVideos.items;
-        //setVideos(videos);
+        const videos = e.data.listVideos.items;
+        setVideos(videos);
       }
   }
 
