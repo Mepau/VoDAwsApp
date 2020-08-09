@@ -5,6 +5,7 @@ import { Formik, Field, Form } from 'formik';
 import Auth from '@aws-amplify/auth';
 import Lambda from 'aws-sdk/clients/lambda'; // npm install aws-sdk
 import axios from "axios";
+import validationSchema from "./uploadValidation";
 
 
 export default class UploadForm extends Component {
@@ -21,7 +22,6 @@ export default class UploadForm extends Component {
      
     //Handler for obtaining pre signed S3 URL for uploads
     handleSignReq = (e, values) => {
-
         
         //Obtain auth credentials from aws sdk env
         Auth.currentCredentials()
@@ -51,6 +51,8 @@ export default class UploadForm extends Component {
 
     //Handler for video file upload
     handleFileChange = (e) => {
+
+        console.log(e.currentTarget.files[0]);
         this.setState({file: e.currentTarget.files[0]});
     }
 
@@ -71,33 +73,38 @@ export default class UploadForm extends Component {
             <Box display="flex" flexDirection="column" boxShadow={3} width="auto%">
                 <h2>Upload Form: </h2>
               <Formik initialValues= {savedValues || initialValues }
+                        validationSchema={validationSchema}
                         enableReinitialize
-                        onSubmit= {(data, {setSubmitting, resetForm}) => {
-                        
+                        onSubmit= {(data, {setSubmitting, resetForm}) => {     
                         var options = { headers: { 'Content-Type': "video/mp4"} };
+                        console.log(data);
                         axios.put(data.signedUrl,this.state.file,options)
                                 .then(res => {
-                                console.log({res})})
-                            .catch(err => console.log({error: err}));
-                        
-                        
+                                console.log({res})
+                                setSubmitting(false)})
+                            .catch(err => console.log({error: err}));  
                     }}
                 >
-                  {({values, isSubmitting}) => (
-                  <Form autoComplete="off" >
-                      <Field name="videoName" type="input" placeholder="Name of the file" as={TextField} />
-                      <Box>   
-                      <Field disabled name="signedUrl" type="text" as={TextField} placeholder="S3 sign"/>
-                      <Button  onClick= {(e) => { this.handleSignReq(e, values)}}>
-                          Click
-                      </Button>
-                      </Box>
-                      <input id="file" name="file" type="file" onChange={this.handleFileChange} />
-                      <Box>
-                      <Button disabled={isSubmitting} type="submit">submit</Button>
-                      </Box>
-                  </Form>
-                  )}
+                  {({values, isSubmitting, errors}) => {
+                        return (
+                            <Form autoComplete="off">
+                                <Field name="videoName" type="input" placeholder="Name of the file" as={TextField} />
+                                {errors.videoName ? <div>{errors.videoName}</div> : null}
+                                <Box>
+                                    <Field disabled name="signedUrl" type="text" as={TextField} placeholder="S3 sign" />
+                                    {errors.signedUrl ? <div>{errors.signedUrl}</div> : null}
+                                    <Button onClick={(e) => { this.handleSignReq(e, values); } }>
+                                        Sign
+                                    </Button>
+                                </Box>
+                                <input id="file" name="file" type="file" onChange={this.handleFileChange} />
+                                {errors.file ? <div>{errors.file}</div> : null}
+                                <Box>
+                                    <Button disabled={isSubmitting} type="submit">submit</Button>
+                                </Box>
+                            </Form>
+                        );
+                    }}
               </Formik>
             </Box>
           )

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoGrid from './VideoGrid';
-import UploadForm from './UploadForm';
+import UploadForm from './forms/UploadForm';
 import { Grid, Button, Container, Box } from "@material-ui/core";
 
 async function signOut() {
@@ -32,9 +32,11 @@ const AppContainer = () => {
         const videos = videodata.data.listVideos.items;
         setVideos(videos);
       } catch (e) {
+
+        console.log(e);
         //if error set gathered data
-        const videos = e.data.listVideos.items;
-        setVideos(videos);
+        //const videos = e.data.listVideos.items;
+        //setVideos(videos);
       }
   }
 
