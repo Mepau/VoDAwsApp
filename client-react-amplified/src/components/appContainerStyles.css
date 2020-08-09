@@ -1,0 +1,44 @@
+
+.titulo {
+    font-size: 3.75em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 750px;
+}
+
+#detailButton {
+    width: 80px;
+    height: 40px;
+}
+
+.list {
+    margin-top: 25px;
+    margin-left: 750px;
+}
+
+
+
+
+
+.mainmenu .leftmenu{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.leftmenu button {
+    margin-left: 10px;
+}
+
+.rightmenu button {
+    margin-left: 10px;
+}
+
+.mainmenu .rightmenu{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+
