@@ -7,7 +7,7 @@ import AppContainter from './components/AppContainer';
 import 'fontsource-roboto';
 import {BrowserRouter , Link } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
-import UploadForm  from'./components/UploadForm';
+import UploadForm  from'./components/forms/UploadForm';
 import NavContainer from './components/NavContainer';
 
 var AWS = require('aws-sdk');
