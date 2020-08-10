@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { Grid, Box, Container } from '@material-ui/core';
 import VideoCard from "./VideoCard";
 
-
-
 const VideoGrid = (props) => {
  
   return (
@@ -20,8 +18,8 @@ const VideoGrid = (props) => {
         {
           props.videos.map((video, index) => (
             (video.hlsUrl !== null)?
-            <Grid item>
-              <VideoCard video={video}/>
+            <Grid item key={video.guid}>
+              <VideoCard video={video} deleteHandler={props.deleteHandler}/>
             </Grid>:<div/>
           ))
         }

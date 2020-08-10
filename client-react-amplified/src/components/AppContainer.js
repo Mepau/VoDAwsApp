@@ -3,25 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoGrid from './VideoGrid';
-import UploadForm from './forms/UploadForm';
 import ProcsList from './ProcsList';
 import { Grid, Button, Container, Box } from "@material-ui/core";
 import  'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import './appContainerStyles.css';
 import { withRouter } from 'react-router-dom';
-
-
-
-// async function signOut() {
-//   try {
-//     console.log("sign out!");
-//       await Auth.signOut();
-     
-//   } catch (error) {
-//       console.log('error signing out: ', error);
-//   }
-// }
+import Lambda from 'aws-sdk/clients/lambda'; // npm install aws-sdk
 
 const AppContainer = (props) => {
 
@@ -37,6 +24,30 @@ const AppContainer = (props) => {
     marginTop: '70px'
     
   }
+
+  //Handler for obtaining pre signed S3 URL for uploads
+  const handleDelete = (e) => {
+
+    const guid = e.currentTarget.value;
+
+    //Obtain auth credentials from aws sdk env
+    Auth.currentCredentials()
+    .then(credentials => {
+        console.log(credentials);
+        const lambda = new Lambda({
+        credentials: Auth.essentialCredentials(credentials)
+    }); 
+    //Invoke lambda using arn and cognito users policies
+    // Send insdert form data as input for customizing file upload
+    lambda.invoke({
+        FunctionName: '746016492294:function:delete-dynamo-and-s3-object',
+        Payload: JSON.stringify({guid})
+    }, (err, data) => {
+        if (err) console.log(JSON.stringify(err)); // an error occurred
+        else      // successful response
+            console.log(JSON.parse(data.Payload));
+    });
+  })}
 
 
   async function fetchVideos() {
@@ -88,11 +99,11 @@ const AppContainer = (props) => {
                     spacing={2}
                    >
                 <Grid item >
-                  <VideoGrid videos={videos}/>   
+                  <VideoGrid videos={videos} deleteHandler={handleDelete}/>   
                 </Grid>
                 <Grid item>
                 <Box>
-                  <ProcsList videos={videos}/>
+                  <ProcsList videos={videos} deleteHandler={handleDelete}/>
                 </Box> 
                 </Grid>
               </Grid>

@@ -1,13 +1,10 @@
-import  React ,  { Component} from 'react';
+import  React from 'react';
 import { Grid, Button, Container, Box } from "@material-ui/core";
 import  'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import {Link, BrowserRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-
-
-
 
 
 const NavContainer = (props)=>{

@@ -5,7 +5,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsExports from "./aws-exports";
 import AppContainter from './components/AppContainer';
 import 'fontsource-roboto';
-import {BrowserRouter , Link } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import UploadForm  from'./components/forms/UploadForm';
 import NavContainer from './components/NavContainer';
