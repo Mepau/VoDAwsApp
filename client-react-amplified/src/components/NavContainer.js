@@ -17,6 +17,7 @@ const NavContainer = (props)=>{
        
         console.log("sign out!");
           await Auth.signOut();
+          window.location.reload(false);
                  
         
       } catch (error) {
