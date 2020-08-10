@@ -4,6 +4,7 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoGrid from './VideoGrid';
 import UploadForm from './forms/UploadForm';
+import ProcsList from './ProcsList';
 import { Grid, Button, Container, Box } from "@material-ui/core";
 import  'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
@@ -90,9 +91,9 @@ const AppContainer = (props) => {
                   <VideoGrid videos={videos}/>   
                 </Grid>
                 <Grid item>
-                  <Box>
-                    {/* <UploadForm/> */}
-                  </Box> 
+                <Box>
+                  <ProcsList videos={videos}/>
+                </Box> 
                 </Grid>
               </Grid>
             </Container>
