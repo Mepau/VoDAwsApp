@@ -4,6 +4,7 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { listVideos } from '../graphql/queries';
 import VideoGrid from './VideoGrid';
 import UploadForm from './UploadForm';
+import ProcsList from './ProcsList';
 import { Grid, Button, Container, Box } from "@material-ui/core";
 
 async function signOut() {
@@ -30,6 +31,7 @@ const AppContainer = () => {
         //If there are no errors set whole data
         const videodata = await API.graphql(graphqlOperation(listVideos)) 
         const videos = videodata.data.listVideos.items;
+        console.log(videodata.data);
         setVideos(videos);
       } catch (e) {
         //if error set gathered data
@@ -50,14 +52,16 @@ const AppContainer = () => {
               justify="center"
               alignItems="center"
               direction="row"
-              spacing={2}
-              maxWidth="md">
+              spacing={1}>
           <Grid item >
             <VideoGrid videos={videos}/>   
           </Grid>
-          <Grid item>
+          <Grid item xs>
             <Box>
               <UploadForm/>
+            </Box> 
+            <Box>
+              <ProcsList videos={videos}/>
             </Box> 
           </Grid>
         </Grid>
